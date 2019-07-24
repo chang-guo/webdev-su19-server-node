@@ -46,7 +46,7 @@ module.exports = function (app) {
     }
 
     function findAllAnswers(req, res) {
-        res.send(universityDao.findAllAnwsers())
+        res.send(universityDao.findAllAnswers())
     }
 
     function findAnswerById(req, res) {

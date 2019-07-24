@@ -3,53 +3,15 @@ let questions = require('../questions');
 let answers = require('../answers');
 
 module.exports = {
-    findStudentById(id) {
-        return students.find(s => s._id === id)
-    },
 
     createStudent(student) {
         students.push(student);
         return student;
     },
 
-    updateStudent(sid, student) {
-        let oldStudent = this.findStudentById(sid);
-        oldStudent.firstName = student.firstName;
-        oldStudent.lastName = student.lastName;
-        oldStudent.username = student.username;
-        oldStudent.password = student.password;
-        oldStudent.gradYear = student.gradYear;
-        oldStudent.scholarship = student.scholarship;
-        return oldStudent;
-    },
-
-    deleteStudent(sid) {
-        students = students.filter(s => s._id !== sid);
-    },
-
     createQuestion(question) {
         questions.push(question);
         return question
-    },
-
-    updateQuestion(qid, question) {
-        let oldQuestion = this.findQuestionById(qid);
-        oldQuestion.question = question.question;
-        oldQuestion.type = question.type;
-        oldQuestion.points = question.points;
-        switch (question.type) {
-            case "TRUE_FALSE":
-                oldQuestion.isTrue = question.isTrue;
-                break;
-            case "MULTIPLE_CHOICE":
-                oldQuestion.choices = question.choices;
-                oldQuestion.correct = question.correct;
-        }
-        return oldQuestion;
-    },
-
-    deleteQuestion(qid) {
-        questions = questions.filter(q => q._id !== qid);
     },
 
     answerQuestion(studentId, questionId, answer) {
@@ -75,6 +37,10 @@ module.exports = {
         return students
     },
 
+    findStudentById(id) {
+        return students.find(s => s._id === id)
+    },
+
     findAllQuestions() {
         return questions
     },
@@ -83,7 +49,7 @@ module.exports = {
         return questions.find(q => q._id === id)
     },
 
-    findAllAnwsers() {
+    findAllAnswers() {
         return answers
     },
 
@@ -97,6 +63,41 @@ module.exports = {
 
     findAnswersByQuestion(questionId) {
         return answers.filter(a => a.question === questionId)
+    },
+
+    updateStudent(sid, student) {
+        let oldStudent = this.findStudentById(sid);
+        oldStudent.firstName = student.firstName;
+        oldStudent.lastName = student.lastName;
+        oldStudent.username = student.username;
+        oldStudent.password = student.password;
+        oldStudent.gradYear = student.gradYear;
+        oldStudent.scholarship = student.scholarship;
+        return oldStudent;
+    },
+
+    deleteStudent(sid) {
+        students = students.filter(s => s._id !== sid);
+    },
+
+    updateQuestion(qid, question) {
+        let oldQuestion = this.findQuestionById(qid);
+        oldQuestion.question = question.question;
+        oldQuestion.type = question.type;
+        oldQuestion.points = question.points;
+        switch (question.type) {
+            case "TRUE_FALSE":
+                oldQuestion.isTrue = question.isTrue;
+                break;
+            case "MULTIPLE_CHOICE":
+                oldQuestion.choices = question.choices;
+                oldQuestion.correct = question.correct;
+        }
+        return oldQuestion;
+    },
+
+    deleteQuestion(qid) {
+        questions = questions.filter(q => q._id !== qid);
     },
 
     findAnswersByStudentAndQuestion(sid, qid) {
