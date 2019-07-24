@@ -18,14 +18,14 @@ module.exports = {
         let question = this.findQuestionById(questionId);
         if (question.type === "TRUE_FALSE") {
             answers.push({
-                _id: answer.id,
+                _id: answer._id,
                 student: studentId,
                 question: questionId,
                 trueFalseAnswer: answer.answer
             })
         } else {
             answers.push({
-                _id: answer.id,
+                _id: answer._id,
                 student: studentId,
                 question: questionId,
                 multipleChoiceAnswer: answer.answer
