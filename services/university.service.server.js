@@ -2,7 +2,9 @@ module.exports = function (app) {
     let universityDao = require('../data/daos/university.dao.server');
 
     function createStudent(req, res) {
-        res.send(universityDao.createStudent(req.body))
+        universityDao.createStudent(req.body).then(x=>
+            res.send(x)
+        )
     }
 
     function updateStudent(req, res) {
@@ -14,11 +16,15 @@ module.exports = function (app) {
     }
 
     function findAllStudents(req, res) {
-        res.send(universityDao.findAllStudents())
+        universityDao.findAllStudents().then(x=>{
+            res.send(x)
+        })
     }
 
     function findStudentById(req, res) {
-        res.send(universityDao.findStudentById(req.params['sid']))
+        universityDao.findStudentById(req.params['sid']).then(x=>
+            res.send(x)
+        )
     }
 
     function createQuestion(req, res) {
@@ -65,24 +71,33 @@ module.exports = function (app) {
         res.send(universityDao.findAnswersByStudentAndQuestion(req.params['sid'], req.params['qid']))
     }
 
-    app.post("/api/student", createStudent);
-    app.get("/api/student", findAllStudents);
-    app.get("/api/student/:sid", findStudentById);
-    app.put("/api/student/:sid", updateStudent);
-    app.delete("/api/student/:sid", deleteStudent);
+    function truncateDatabase(req,res){
+        res.send(universityDao.truncateDatabase())
+    }
 
-    app.post("/api/question", createQuestion);
-    app.get("/api/question", findAllQuestions);
+    function populateDatabase(req,res){
+        res.send(universityDao.populateDatabase())
+    }
+
+    app.delete("/api/all", truncateDatabase);
+    app.post("/api/populate", populateDatabase);
+
+
+    app.post("/api/students", createStudent);
+    app.get("/api/students", findAllStudents);
+
+    app.get("/api/students/:sid", findStudentById);
+    app.put("/api/students/:sid", updateStudent);
+    app.delete("/api/students/:sid", deleteStudent);
+
+    app.post("/api/questions", createQuestion);
+    app.get("/api/questions", findAllQuestions);
     app.get("/api/question/:qid", findQuestionById);
     app.put("/api/question/:qid", updateQuestion);
     app.delete("/api/question/:qid", deleteQuestion);
 
-    app.post("/api/student/:sid/question/:qid/answer", studentAnswerQuestion);
-    app.get("/api/answer", findAllAnswers);
-    app.get("/api/answer/:aid", findAnswerById);
-    app.get("/api/question/:qid/answer", getAllAnswersForQuestion);
-    app.get("/api/student/:sid/answer", getAllAnswersForStudent);
-    app.get("/api/student/:sid/question/:qid/answer", getAnswersForStudentAndQuestion);
-    app.get("/api/question/:qid/student/:sid/answer", getAnswersForStudentAndQuestion);
+    app.post("/api/students/:sid/questions/:qid/answers", studentAnswerQuestion);
+    app.get("/api/students/:sid/questions/:qid/answers", getAnswersForStudentAndQuestion);
+    app.get("/api/questions/:qid/students/:sid/answers", getAnswersForStudentAndQuestion);
 
 };
