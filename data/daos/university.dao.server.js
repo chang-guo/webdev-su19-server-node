@@ -23,6 +23,7 @@ findAnswerById = answerId => answerModel.findById(answerId);
 deleteAnswer = answerId => answerModel.remove({_id: answerId});
 findAnswersByStudent = (studentId) => answerModel.find({student: studentId});
 findAnswersByQuestion = (questionId) => answerModel.find({question: questionId});
+findAnswersByStudentAndQuestion = (studentId, questionId) => answerModel.find({student: studentId, question: questionId});
 answerQuestion = (studentId, questionId, answer) => {
     return new Promise(function (resolve, reject) {
         Promise.all([
@@ -177,6 +178,7 @@ module.exports = {
     findAllAnswers,
     findAnswersByStudent,
     findAnswersByQuestion,
+    findAnswersByStudentAndQuestion,
 
     populateDatabase,
     truncateDatabase,
