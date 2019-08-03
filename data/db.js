@@ -14,19 +14,20 @@ module.exports = function () {
 
     let options = {
         server : {
-            "socketOptions" : {
-                "keepAlive" : 300000,
-                "connectTimeoutMS" : 30000
+            socketOptions : {
+                keepAlive : 300000,
+                connectTimeoutMS : 30000
             }
         },
         replset : {
-            "socketOptions" : {
-                "keepAlive" : 300000,
-                "connectTimeoutMS" : 30000
+            socketOptions : {
+                keepAlive : 300000,
+                connectTimeoutMS : 30000
             }
         },
-        useNewUrlParser: true
-
+        db: {
+            useNewUrlParser: true
+        }
     };
 
     mongoose.connect(connectionString,options);
