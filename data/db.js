@@ -12,5 +12,22 @@ module.exports = function () {
         connectionString += '@ds113122.mlab.com:13122/heroku_lfscl362';
     }
 
-    mongoose.connect(connectionString,{ useNewUrlParser: true });
+    let options = {
+        server : {
+            "socketOptions" : {
+                "keepAlive" : 300000,
+                "connectTimeoutMS" : 30000
+            }
+        },
+        replset : {
+            "socketOptions" : {
+                "keepAlive" : 300000,
+                "connectTimeoutMS" : 30000
+            }
+        },
+        useNewUrlParser: true
+
+    };
+
+    mongoose.connect(connectionString,options);
 };
