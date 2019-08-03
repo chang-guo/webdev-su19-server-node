@@ -7,4 +7,4 @@ app.use(bodyParser.json());
 let universityService = require('./services/university.service.server');
 universityService(app);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
